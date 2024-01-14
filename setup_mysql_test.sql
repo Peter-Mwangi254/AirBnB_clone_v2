@@ -1,3 +1,4 @@
+-- Test that checks a script that prepares a MySQL server
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
 GRANT USAGE ON *.* TO 'hbnb_test'@'localhost';
