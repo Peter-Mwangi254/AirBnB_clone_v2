@@ -24,7 +24,7 @@ class BaseModel:
             update_at: represents a column containing a datetime
     """
     if models.storage_type == 'db':
-        id = Column(String(68), primary_key=True, nullable=False)
+        id = Column(String(60), primary_key=True, nullable=False)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
 
