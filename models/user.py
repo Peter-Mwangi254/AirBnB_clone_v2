@@ -11,7 +11,7 @@ class User(BaseModel, Base):
     Attributes:
             email: represents a column containing a string
             password: represents a column containing a string
-            firat_name = represents a column containing a string
+            first_name = represents a column containing a string
             last_name = represents a column containing a string
     """
     if storage_type == 'db':
