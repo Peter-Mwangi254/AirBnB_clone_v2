@@ -78,7 +78,7 @@ class Place(BaseModel, Base):
                     reviews_list.append(review)
             return reviews_list
 
-        @property.getter
+        @property
         def amenities(self):
             """Returns the list of Amenity instances based on the attribute
             amenity_ids that contains all Amenity.id linked to the Place
@@ -92,7 +92,7 @@ class Place(BaseModel, Base):
                     amenities.append(amenity)
             return amenities
 
-        @property.setter
+        @property
         def amenities(self, obj):
             """Setter attribute amenities that handles append method
             for adding an Amenity.id to the attribute amenity_id

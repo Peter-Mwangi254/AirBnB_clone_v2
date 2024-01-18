@@ -14,21 +14,16 @@ class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
-    all_classes = {'BaseModel': BaseModel, 'User': User,
-                   'State': State, 'City': City, 'Amenity': Amenity,
-                   'Place': Place, 'Review': Review}
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        return_all = {}
         if cls is None:
-            return self.__objects
-        else:
-            if cls.__name__ in self.all_classes:
-                for key, val in self.__objects.items():
-                    if key.split('.')[0] == cls.__name__:
-                        return_all.update({key: val})
-        return return_all
+            return FileStorage.__objects
+        obj_dict = {}
+        for key, value in FileStorage.__objects.items():
+            if isinstance(value, cls):
+                obj_dict[key] = value
+        return obj_dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -46,10 +41,10 @@ class FileStorage:
     def reload(self):
         """Loads storage dictionary from file"""
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -59,9 +54,13 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
+    def close(self):
+        """display our HBNB data"""
+        self.reload()
+
     def delete(self, obj=None):
-        """Deletes obj from __objects
-        """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+        """Delete an object"""
+        if obj is not None:
+            key = obj.__class__.__name__+'.'+obj.id
+            if key in self.__objects:
+                del self.__objects[key]
