@@ -37,10 +37,10 @@ EOF
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
 # Give ownership of the /data/ folder to the ubuntu user AND group
-sudo chown -R ubuntu:ubuntu /data/
+sudo chown -hR ubuntu:ubuntu /data/
 
 # Add alias directive and location block for serving static content to Nginx configuration
-sudo sed -i "s@server_name _;@server_name _;\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n@" /etc/nginx/sites-available/default
+sudo sed -i "48i \\\tlcation /hbnb_static/ {\n\t\talias /data/web_static/current/};\n\t}\n" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
