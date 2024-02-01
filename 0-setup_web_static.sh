@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # sets up your web servers for the deployment of web_static
 sudo apt -y update
+
 # Install Nginx if it not already installed
 command -v nginx || sudo apt install nginx
 
@@ -56,6 +57,8 @@ sudo sed -i "/server {/ {
         }
     }" $nginx_config_file
 
+# Test to make sure that there are no syntax errors in any of your Nginx files
+sudo nginx -t
 
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
