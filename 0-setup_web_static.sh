@@ -34,27 +34,13 @@ cat <<EOF > "$FILE"
 EOF
 
 # Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder
-sudo rm -f /data/web_static/current && sudo ln -s /data/web_static/releases/test /data/web_static/current
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
 # Give ownership of the /data/ folder to the ubuntu user AND group
 sudo chown -R ubuntu:ubuntu /data/
 
-# Define the path to the Nginx configuration file
-nginx_config_file="/etc/nginx/sites-available/default"
-
-# Define the path to the web_static directory
-web_static_dir="/data/web_static/current/"
-
-# Define the URL path for serving static content
-static_url_path="/hbnb_static"
-
 # Add alias directive and location block for serving static content to Nginx configuration
-cat <<EOF | sudo tee -a $nginx_config_file > /dev/null
-    location $static_url_path {
-        alias $web_static_dir;
-        # Add any additional directives here if needed
-    }
-EOF
+sudo sed -i "26i \\\tlcation /hbnb_static/ {\n\t\talias /data/web_static/current/};\n\t}\n" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
