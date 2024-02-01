@@ -47,11 +47,8 @@ web_static_dir="/data/web_static/current/"
 # Define the URL path for serving static content
 static_url_path="/hbnb_static"
 
-# Add alias directive to Nginx configuration
-sudo sed -i "/location \/ {/a \    alias $web_static_dir;" $nginx_config_file
-
-# Add location block for serving static content
-sudo sed -i "/location \/ {/a \    location $static_url_path { }" $nginx_config_file
+# Add alias directive and location block for serving static content to Nginx configuration
+sudo sed -i "/^server {/a \    location $static_url_path {\n        alias $web_static_dir;\n    }" $nginx_config_file
 
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
