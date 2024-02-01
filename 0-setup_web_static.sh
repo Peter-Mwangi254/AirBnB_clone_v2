@@ -3,7 +3,7 @@
 sudo apt -y update
 
 # Install Nginx if it not already installed
-command -v nginx || sudo apt install nginx
+command -v nginx || sudo apt -y install nginx
 
 # Create the folder /data/ if it doesn’t already exist
 mkdir -p /data/
@@ -40,7 +40,7 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Add alias directive and location block for serving static content to Nginx configuration
-sudo sed -i "26i \\\tlcation /hbnb_static/ {\n\t\talias /data/web_static/current/};\n\t}\n" /etc/nginx/sites-available/default
+sudo sed -i "s@server_name _;@server_name _;\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n@" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
