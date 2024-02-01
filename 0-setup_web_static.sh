@@ -50,12 +50,12 @@ static_url_path="/hbnb_static"
 
 # Add alias directive and location block for serving static content to Nginx configuration
 sudo sed -i "/server {/ {
-        a \\
-        location $static_url_path {
-            alias $web_static_dir;
-            # Add any additional directives here if needed
-        }
-    }" $nginx_config_file
+    a \\
+    location $static_url_path {
+        alias $web_static_dir;
+        # Add any additional directives here if needed
+    }
+}" $nginx_config_file
 
 # Test to make sure that there are no syntax errors in any of your Nginx files
 sudo nginx -t
