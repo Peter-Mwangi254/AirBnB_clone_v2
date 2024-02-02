@@ -6,11 +6,8 @@ sudo apt -y update
 sudo apt -y install nginx
 
 # Create the folder if it doesn’t already exist
-mkdir -p /data/
-
-# Create the folder if it doesn’t already exist
-mkdir -p /data/web_static/shared/
-mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
 
 # Create a fake HTML file /data/web_static/releases/test/index.html
 
@@ -32,4 +29,4 @@ sudo chown -hR ubuntu:ubuntu /data/
 sudo sed -i "48i \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes
-sudo service restart nginx
+sudo service nginx restart
