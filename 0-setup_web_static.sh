@@ -42,6 +42,5 @@ sudo chown -hR ubuntu:ubuntu /data/
 # Add alias directive and location block for serving static content to Nginx configuration
 sudo sed -i "48i \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default
 
-
 # Restart Nginx to apply changes
 sudo systemctl restart nginx
