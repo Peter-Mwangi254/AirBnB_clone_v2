@@ -3,7 +3,7 @@
 the web_static folder
 """
 from datetime import datetime
-from fabric.api import *
+from fabric.api import local, task
 
 
 @task
