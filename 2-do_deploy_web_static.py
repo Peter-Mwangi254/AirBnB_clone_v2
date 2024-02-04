@@ -3,7 +3,7 @@
 """
 
 from os import path
-from fabric.api import put, env, run
+from fabric.api import put, env, run, task
 
 
 env.hosts = ['100.26.49.195', '54.152.70.222']
@@ -11,6 +11,7 @@ env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
 
 
+@task
 def do_deploy(archive_path):
     """Distributes an archive to your web servers,
     using the function do_deploy
@@ -50,7 +51,7 @@ web_static_{}/web_static'
         # re-establish symbolic link
         run(' ln -s /data/web_static/releases/\
 web_static_{}/ /data/web_static/current'.format(timestamp))
-    except Exception:
+    except FileNotFoundError:
         return False
 
     # return True on success

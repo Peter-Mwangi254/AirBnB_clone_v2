@@ -28,8 +28,7 @@ def do_pack():
 
     if result.succeeded:
         return archive_path
-    else:
-        return None
+    return None
 
 
 def do_deploy(archive_path):
@@ -71,7 +70,7 @@ web_static_{}/web_static'
         # re-establish symbolic link
         run(' ln -s /data/web_static/releases/\
 web_static_{}/ /data/web_static/current'.format(timestamp))
-    except Exception:
+    except FileNotFoundError:
         return False
 
     # return True on success
