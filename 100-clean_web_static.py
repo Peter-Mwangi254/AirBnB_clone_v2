@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-"""A Fabric script (based on the file 2-do_deploy_web_static.py) that
-creates and distributes an archive to your web servers
+"""A Fabric script (based on the file 3-deploy_web_static.py)
+that deletes out-of-date archives
 """
 
 from os import path
 from datetime import datetime
-from fabric.api import put, env, run, local
+from fabric.api import put, env, run, local, runs_once
 
 
 env.hosts = ['100.26.49.195', '54.152.70.222']
@@ -64,3 +64,21 @@ def deploy():
         return False
     success = do_deploy(archive_path)
     return success
+
+
+@runs_once
+def remove_local(number):
+    """Remove local
+    """
+    local("ls -dt versions/* | tail -n +{} | sudo xargs rm -fr".format(number))
+
+
+def do_clean(number=0):
+    """Deletes out-of-date archives
+    """
+    if int(number) == 0:
+        number = 1
+    number = int(number) + 1
+    remove_local(number)
+    dpath = "/data/web_static/releases/*"
+    run("ls -dt {} | tail -n +{} | sudo xargs rm -fr".format(dpath, number))

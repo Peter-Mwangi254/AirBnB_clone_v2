@@ -17,42 +17,21 @@ def do_deploy(archive_path):
     using the function do_deploy
     """
     try:
-        if not (path.exists(archive_path)):
-            return False
+        if (path.exists(archive_path)):
+            archive = archive_path.split('/')[1]
+            archive_path = "/tmp/{}".format(archive)
+            folder = archive.split('.')[0]
+            f_path = "/data/web_static/releases/{}/".format(folder)
 
-        # upload archive
-        put(archive_path, '/tmp/')
-
-        # create target dir
-        timestamp = archive_path[-18:-4]
-        run('sudo mkdir -p /data/web_static/\
-releases/web_static_{}/'.format(timestamp))
-
-        # uncompress archive and delete .tgz
-        run('sudo tar -xzf /tmp/web_static_{}.tgz -C \
-/data/web_static/releases/web_static_{}/'
-            .format(timestamp, timestamp))
-
-        # remove archive
-        run('sudo rm /tmp/web_static_{}.tgz'.format(timestamp))
-
-        # move contents into host web_static
-        run('sudo mv /data/web_static/releases/web_static_{}/web_static/* \
-/data/web_static/releases/web_static_{}/'.format(timestamp, timestamp))
-
-        # remove extraneous web_static dir
-        run('sudo rm -rf /data/web_static/releases/\
-web_static_{}/web_static'
-            .format(timestamp))
-
-        # delete pre-existing symbolic link
-        run('sudo rm -rf /data/web_static/current')
-
-        # re-establish symbolic link
-        run(' ln -s /data/web_static/releases/\
-web_static_{}/ /data/web_static/current'.format(timestamp))
+        put(archive_path, archive_path)
+        run("mkdir -p {}".format(f_path))
+        run("tar -xzf {} -C {}".format(archive_path, f_path))
+        run("rm {}".format(archive_path))
+        run("mv -f {}web_static/* {}".format(f_path, f_path))
+        run("rm -rf {}web_static".format(f_path))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(f_path))
+        print("New version deployed!")
+        return True
     except FileNotFoundError:
         return False
-
-    # return True on success
-    return True
