@@ -19,14 +19,14 @@ def do_deploy(archive_path):
     try:
         if (path.exists(archive_path)):
             archive = archive_path.split('/')[1]
-            archive_path = "/tmp/{}".format(archive)
+            arch_path = "/tmp/{}".format(archive)
             folder = archive.split('.')[0]
             f_path = "/data/web_static/releases/{}/".format(folder)
 
-        put(archive_path, archive_path)
+        put(archive_path, arch_path)
         run("mkdir -p {}".format(f_path))
-        run("tar -xzf {} -C {}".format(archive_path, f_path))
-        run("rm {}".format(archive_path))
+        run("tar -xzf {} -C {}".format(arch_path, f_path))
+        run("rm {}".format(arch_path))
         run("mv -f {}web_static/* {}".format(f_path, f_path))
         run("rm -rf {}web_static".format(f_path))
         run("rm -rf /data/web_static/current")
