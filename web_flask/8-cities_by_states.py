@@ -13,7 +13,7 @@ Routes:
 
 from flask import Flask, render_template
 from models import storage
-from models.state import State, City
+from models.state import State
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -24,7 +24,6 @@ def cities_by_states():
     """Display a HTML page
     """
     return render_template("8-cities_by_states.html",
-                           cities=storage.all(City),
                            states=storage.all(State))
 
 
