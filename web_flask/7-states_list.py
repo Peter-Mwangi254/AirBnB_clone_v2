@@ -21,7 +21,7 @@ def states_list():
     """Display a HTML page
     """
     return render_template("7-states_list.html",
-                           state_storage=storage.all(State))
+                           states=storage.all(State))
 
 
 @app.route("/states_list")
