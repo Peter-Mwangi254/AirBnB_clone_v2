@@ -65,6 +65,7 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
 
+
         @property
         def reviews(self):
             """Returns the list of Review instances with
@@ -92,7 +93,7 @@ class Place(BaseModel, Base):
                     amenities.append(amenity)
             return amenities
 
-        @property
+        @amenities.setter
         def amenities(self, obj):
             """Setter attribute amenities that handles append method
             for adding an Amenity.id to the attribute amenity_id
